@@ -95,14 +95,26 @@ public class Main {
             int quantity = scan.nextInt();
             if(quantity > 0) {
                 for(int i = 0; i < quantity; i++) {
+                    System.out.println("Podaj tytuł i rok filmu: ");
                     list2.add(new Films(scan.next(), scan.nextInt()));
                     if(list2.getLast().year < 1900 || list2.getLast().year > 2025) {
                         list2.remove(list2.getLast());
+                        System.out.println("Niepoprawny rok, film nie został dodany");
+                    }
+                    else {
+                        System.out.println("Poprawnie dodano film");
                     }
                 }
             }
             else {
                 System.out.println("Niepoprawna liczba lub 0");
+            }
+
+            System.out.println("\nAktualna lista filmów: ");
+            num = 1;
+            for(Films film : list2) {
+                System.out.println(num + ". " + film.title + " " + film.year);
+                num++;
             }
 
         System.out.println("-------------------");
@@ -153,23 +165,29 @@ public class Main {
             System.out.println();
 
         System.out.println("------EDYTOWANIE------");
-
-            System.out.println("Podaj numer z listy wyżej: ");
-            int num2 = scan.nextInt();
-                if(num2 > 0 && num2 <= list2.size()) {
-                    System.out.println("Czy chcesz edytować tytul czy rok(t/r): ");
-                    char ans2 = scan.next().toLowerCase().charAt(0);
-                    if(ans2 == 't') {
-                        System.out.println("Podaj tytuł: ");
-                        list2.get(num2-1).title = scan.next();
+            while(true) {
+                System.out.println("Podaj numer z listy wyżej: ");
+                int num2 = scan.nextInt();
+                    if (num2 > 0 && num2 <= list2.size()) {
+                        System.out.println("Czy chcesz edytować tytul czy rok(t/r): ");
+                        char ans2 = scan.next().toLowerCase().charAt(0);
+                            if (ans2 == 't') {
+                                System.out.println("Podaj tytuł: ");
+                                list2.get(num2 - 1).title = scan.next();
+                                break;
+                            } else if (ans2 == 'r') {
+                                System.out.println("Podaj rok: ");
+                                list2.get(num2 - 1).year = scan.nextInt();
+                                break;
+                            }
+                            else {
+                                System.out.println("Błąd, wpisz t lub r");
+                            }
                     }
-                    else if(ans2 == 'r') {
-                        System.out.println("Podaj rok: ");
-                        list2.get(num2-1).year = scan.nextInt();
-
+                    else {
+                        System.out.println("Błąd, wpisz liczbę z przedziału");
                     }
-                }
-
+            }
                 for(Films film : list2) {
                     System.out.println(film.title + " " + film.year);
                 }
